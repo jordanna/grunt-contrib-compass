@@ -128,7 +128,14 @@ exports.init = function (grunt) {
 
   // build the array of arguments to build the compass command
   exports.buildArgsArray = function (options) {
-    var args = [options.clean ? 'clean' : 'compile'];
+    var args;
+    if (options.clean) {
+      args = ['clean'];
+    } else if (options.watch) {
+      args = ['watch'];
+    } else {
+      args = ['compile'];
+    }
     var basePath = options.basePath;
 
     grunt.verbose.writeflags(options, 'Options');
@@ -165,6 +172,7 @@ exports.init = function (grunt) {
     [].push.apply(args, dargs(options, [
       'raw',
       'clean',
+      'watch',
       'bundleExec',
       'basePath',
       'specify'
